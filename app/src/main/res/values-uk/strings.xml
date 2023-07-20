@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WeatherLit</string>
+    <string name="forecast_for_5_days">Прогноз на 5 днів</string>
+    <string name="see_more">Більше</string>
+    <string name="error_fst_launch">Для коректного першого запуску додатка необхідно бути підключенним до мережи.</string>
+    <string name="close">закрити</string>
+    <string name="exit">вийти</string>
+    <string name="temperature">Температура</string>
+    <string name="feels_like">Відчувається</string>
+    <string name="time">час</string>
+    <string name="menu_settings">Меню налаштування</string>
+    <string name="synchronize">синхронізація</string>
+    <string name="settings">Налаштування</string>
+    <string name="accept">Прийняти</string>
+    <string name="synchronize_error">Помилка синхронізації</string>
+    <string name="is_not_online">Немає доступу до мережи</string>
+    <string name="is_not_time">Ви вже синхронізовані</string>
+    <string name="require_accept_location_message">Для синхронізації локації із вашим містом, вам слід надати додатку доступ до отримання інформації щодо локації</string>
+    <string name="require_accept_location_title">Доступ до локації</string>
+    <string name="require_accept_permission_message">Для синхронізації локації із вашим містом, вам слід надати додатку дозвіл на отримання інформації щодо вашого міста</string>
+    <string name="require_accept_permission_title">Дозвіл локації</string>
+    <string name="unknown_location">Невідоме місто</string>
+
+    //groups
+    <string name="g_thunderstorm">Гроза</string>
+    <string name="g_drizzle">Мряка</string>
+    <string name="g_rain">Дощ</string>
+    <string name="g_snow">Сніг</string>
+    <string name="g_mist">Туман</string>
+    <string name="g_smoke">Димно</string>
+    <string name="g_haze">Імла</string>
+    <string name="g_dust">Пил</string>
+    <string name="g_fog">Сильний туман</string>
+    <string name="g_sand">Піщано</string>
+    <string name="g_ash">Попільно</string>
+    <string name="g_squall">Сильне повітря</string>
+    <string name="g_tornado">Торнадо</string>
+    <string name="g_clear">Чисте небо</string>
+    <string name="g_clouds">Хмарно</string>
+
+    //descriptions
+    <string name="d_thunderstorm_with_light_rain">гроза із невеликим дощем</string>
+    <string name="d_thunderstorm_with_rain">гроща із дощем</string>
+    <string name="d_thunderstorm_with_heavy_rain">гроза із сильним дощем</string>
+    <string name="d_light_thunderstorm">легка гроза</string>
+    <string name="d_thunderstorm">гроза</string>
+    <string name="d_heavy_thunderstorm">сильна гроза</string>
+    <string name="d_ragged_thunderstorm">обірвана гроза</string>
+    <string name="d_thunderstorm_with_light_drizzle">гроза з легкою мрякою</string>
+    <string name="d_thunderstorm_with_drizzle">гроза із мрякою</string>
+    <string name="d_thunderstorm_with_heavy_drizzle">гроза із сильною мрякою</string>
+    <string name="d_light_intensity_drizzle">невелика мряка</string>
+    <string name="d_drizzle">мряка</string>
+    <string name="d_heavy_intensity_drizzle">сильна мряка</string>
+    <string name="d_light_intensity_drizzle_rain">легка мряка із дощем</string>
+    <string name="d_drizzle_rain">мряка із дощем</string>
+    <string name="d_heavy_intensity_drizzle_rain">сильна мряка із дощем</string>
+    <string name="d_shower_rain_and_drizzle">проливний дощ із мрякою</string>
+    <string name="d_heavy_shower_rain_and_drizzle">сильний проливний дощ із мрякою</string>
+    <string name="d_shower_drizzle">проливна мряка</string>
+    <string name="d_light_rain">легкий дощ</string>
+    <string name="d_moderate_rain">помірний дощ</string>
+    <string name="d_heavy_intensity_rain">сильний дощ</string>
+    <string name="d_very_heavy_rain">злива</string>
+    <string name="d_extreme_rain">сильний дощ</string>
+    <string name="d_freezing_rain">морозний дощ</string>
+    <string name="d_light_intensity_shower_rain">легкий проливний дощ</string>
+    <string name="d_shower_rain">проливний дощ</string>
+    <string name="d_heavy_intensity_shower_rain">сильний проливний дощ</string>
+    <string name="d_ragged_shower_rain">обірваний проливний дощ</string>
+    <string name="d_light_snow">легкий сніг</string>
+    <string name="d_snow">сніг</string>
+    <string name="d_heavy_snow">дуже сніжно</string>
+    <string name="d_sleet">вологий сніг</string>
+    <string name="d_light_shower_sleet">легкий вологий сніг</string>
+    <string name="d_shower_sleet">проливний вологий сніг</string>
+    <string name="d_light_rain_and_snow">легкий дощ із снігом</string>
+    <string name="d_rain_and_snow">дощ із снігом</string>
+    <string name="d_light_shower_snow">легкий проливний сніг</string>
+    <string name="d_shower_snow">проливний сніг</string>
+    <string name="d_heavy_shower_snow">сильний проливний сніг</string>
+    <string name="d_mist">легкий туман</string>
+    <string name="d_smoke">туман</string>
+    <string name="d_haze">туман</string>
+    <string name="d_sand_dust_whirls">піщанна буря</string>
+    <string name="d_fog">сильний туман</string>
+    <string name="d_sand">піщанно</string>
+    <string name="d_dust">запорошенно</string>
+    <string name="d_volcanic_ash">вулканічний пил</string>
+    <string name="d_squalls">сильне повітря</string>
+    <string name="d_tornado">торнадо</string>
+    <string name="d_clear_sky">чисте небо</string>
+    <string name="d_few_clouds">легкі хмари</string>
+    <string name="d_scattered_clouds">хмарно</string>
+    <string name="d_broken_clouds">хмарно</string>
+    <string name="d_overcast_clouds">дуже хмарно</string>
+
+    <string name="language">Мова</string>
+    <string name="ukrainian">Українська</string>
+    <string name="english">Англійська</string>
+
+    <string name="load_error_result">Помилка загрузки даних. Будь-ласка, спробуйте ще раз.</string>
+
+    //additionalInfo
+    <string name="a_i_temp_max">Макс. темп.</string>
+    <string name="a_i_temp_min">Мін. темп.</string>
+    <string name="a_i_cloudiness">Хмарність</string>
+    <string name="a_i_humidity">Вологість</string>
+    <string name="a_i_pressure">Тиск</string>
+    <string name="a_i_wind_speed">Швидкість повітря</string>
+
+    <string name="forecasted_title">Прогноз на 5 днів</string>
+
+    <string name="measure_hPa">гПа</string>
+    <string name="measure_ms">м/с</string>
+
+    <string name="error">Помилка</string>
+</resources>

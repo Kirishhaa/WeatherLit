@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">WeatherLit</string>
+    <string name="forecast_for_5_days">forecast for 5 days</string>
+    <string name="see_more">see more</string>
+    <string name="error_fst_launch">For the first launch the app, you need to be connected to network. Please, connect to the network and try again</string>
+    <string name="close">close</string>
+    <string name="exit">exit</string>
+    <string name="temperature">temperature</string>
+    <string name="feels_like">feels like</string>
+    <string name="time">time</string>
+    <string name="menu_settings">menu settings</string>
+    <string name="synchronize">synchronize</string>
+    <string name="settings">settings</string>
+    <string name="accept">Accept</string>
+    <string name="synchronize_error">Synchronize error</string>
+    <string name="is_not_online">Internet isn\'t available</string>
+    <string name="is_not_time">You have already synchronized</string>
+    <string name="require_accept_location_message">To synchronize you with location, you should allow app to get info about your location.</string>
+    <string name="require_accept_location_title">Location access</string>
+    <string name="require_accept_permission_message">To synchronize you with location, you should to give app location permission</string>
+    <string name="require_accept_permission_title">Permission location</string>
+    <string name="unknown_location">Unknown location</string>
+
+    //groups
+    <string name="g_thunderstorm">Thunderstorm</string>
+    <string name="g_drizzle">Drizzle</string>
+    <string name="g_rain">Rain</string>
+    <string name="g_snow">Snow</string>
+    <string name="g_mist">Mist</string>
+    <string name="g_smoke">Smoke</string>
+    <string name="g_haze">Haze</string>
+    <string name="g_dust">Dust</string>
+    <string name="g_fog">Fog</string>
+    <string name="g_sand">Sand</string>
+    <string name="g_ash">Ash</string>
+    <string name="g_squall">Squall</string>
+    <string name="g_tornado">Tornado</string>
+    <string name="g_clear">Clear</string>
+    <string name="g_clouds">Clouds</string>
+    
+    //descriptions
+    <string name="d_thunderstorm_with_light_rain">thunderstorm with light rain</string>
+    <string name="d_thunderstorm_with_rain">thunderstorm with rain</string>
+    <string name="d_thunderstorm_with_heavy_rain">thunderstorm with heavy rain</string>
+    <string name="d_light_thunderstorm">light thunderstorm</string>
+    <string name="d_thunderstorm">thunderstorm</string>
+    <string name="d_heavy_thunderstorm">heavy thunderstorm</string>
+    <string name="d_ragged_thunderstorm">ragged thunderstorm</string>
+    <string name="d_thunderstorm_with_light_drizzle">thunderstorm with light drizzle</string>
+    <string name="d_thunderstorm_with_drizzle">thunderstorm with drizzle</string>
+    <string name="d_thunderstorm_with_heavy_drizzle">thunderstorm with heavy drizzle</string>
+    <string name="d_light_intensity_drizzle">light intensity drizzle</string>
+    <string name="d_drizzle">drizzle</string>
+    <string name="d_heavy_intensity_drizzle">heavy intensity drizzle</string>
+    <string name="d_light_intensity_drizzle_rain">light intensity drizzle rain</string>
+    <string name="d_drizzle_rain">drizzle rain</string>
+    <string name="d_heavy_intensity_drizzle_rain">heavy intensity drizzle rain</string>
+    <string name="d_shower_rain_and_drizzle">shower rain and drizzle</string>
+    <string name="d_heavy_shower_rain_and_drizzle">heavy shower rain and drizzle</string>
+    <string name="d_shower_drizzle">shower drizzle</string>
+    <string name="d_light_rain">light rain</string>
+    <string name="d_moderate_rain">moderate rain</string>
+    <string name="d_heavy_intensity_rain">heavy intensity rain</string>
+    <string name="d_very_heavy_rain">very heavy rain</string>
+    <string name="d_extreme_rain">extreme rain</string>
+    <string name="d_freezing_rain">freezing rain</string>
+    <string name="d_light_intensity_shower_rain">light intensity shower rain</string>
+    <string name="d_shower_rain">shower rain</string>
+    <string name="d_heavy_intensity_shower_rain">heavy intensity shower rain</string>
+    <string name="d_ragged_shower_rain">ragged shower rain</string>
+    <string name="d_light_snow">light snow</string>
+    <string name="d_snow">snow</string>
+    <string name="d_heavy_snow">heavy snow</string>
+    <string name="d_sleet">sleet</string>
+    <string name="d_light_shower_sleet">light shower sleet</string>
+    <string name="d_shower_sleet">shower sleet</string>
+    <string name="d_light_rain_and_snow">light rain and snow</string>
+    <string name="d_rain_and_snow">rain and snow</string>
+    <string name="d_light_shower_snow">light shower snow</string>
+    <string name="d_shower_snow">shower snow</string>
+    <string name="d_heavy_shower_snow">heavy shower snow</string>
+    <string name="d_mist">mist</string>
+    <string name="d_smoke">smoke</string>
+    <string name="d_haze">haze</string>
+    <string name="d_sand_dust_whirls">sand/dust whirls</string>
+    <string name="d_fog">fog</string>
+    <string name="d_sand">sand</string>
+    <string name="d_dust">dust</string>
+    <string name="d_volcanic_ash">volcanic ash</string>
+    <string name="d_squalls">squalls</string>
+    <string name="d_tornado">tornado</string>
+    <string name="d_clear_sky">clear sky</string>
+    <string name="d_few_clouds">few clouds</string>
+    <string name="d_scattered_clouds">scattered clouds</string>
+    <string name="d_broken_clouds">broken clouds</string>
+    <string name="d_overcast_clouds">overcast clouds</string>
+
+    <string name="language">Language</string>
+    <string name="ukrainian">Ukrainian</string>
+    <string name="english">English</string>
+
+    <string name="load_error_result">During data loading has appeared an error. Please, try again</string>
+
+    //additionalInfo
+    <string name="a_i_temp_max">Temp max</string>
+    <string name="a_i_temp_min">Temp min</string>
+    <string name="a_i_cloudiness">Cloudiness</string>
+    <string name="a_i_humidity">Humidity</string>
+    <string name="a_i_pressure">Pressure</string>
+    <string name="a_i_wind_speed">Wind speed</string>
+
+    <string name="forecasted_title">Forecast for 5 days</string>
+    
+    <string name="measure_hPa">hPa</string>
+    <string name="measure_ms">m/s</string>
+
+    <string name="error">Error</string>
+</resources>

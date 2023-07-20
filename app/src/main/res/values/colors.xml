@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="progressBar_bg">#5fffffff</color>
+    <color name="progressBarColor">#ffffbc40</color>
+    <color name="selected_item_start">#5fffffff</color>
+    <color name="selected_item_end">#5fffffff</color>
+    <color name="unselected_item_start">#5fd7ffd9</color>
+    <color name="unselected_item_end">#1a345678</color>
+    <color name="list_item_start">#1a745678</color>
+    <color name="list_item_end">#1a345678</color>
+    <color name="text_color">#FF000000</color>
+    <color name="main_color_bg">#35ffbc40</color>
+    <color name="list_view_start">#25569979</color>
+    <color name="list_view_end">#2a445678</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="app_bg">#FF000000</color>
+</resources>

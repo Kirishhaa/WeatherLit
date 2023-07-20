@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.FrameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:layout_width="35dp"
+                android:layout_height="35dp">
+
+                <ImageView
+                    android:id="@+id/toolbar_navigate_up"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_navigate_up"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/synchronize" />
+
+                <ImageView
+                    android:id="@+id/toolbar_synchronize"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_sync"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/synchronize" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/toolbar_town"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Mykolaiv"
+                android:textSize="24sp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/toolbar_settings"
+                android:layout_marginTop="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_settings"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/menu_settings"/>
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/progressBarColor"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+
+
+</merge>
