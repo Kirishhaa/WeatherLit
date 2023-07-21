@@ -2,7 +2,6 @@ package com.example.weatherapp.views
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ScrollView
 import androidx.annotation.LayoutRes
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment

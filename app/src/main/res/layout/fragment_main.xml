@@ -91,12 +91,12 @@
                 android:id="@+id/week_day_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:itemCount="3"
                 tools:listitem="@layout/day_of_week_item" />
 
             <TextView

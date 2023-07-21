@@ -5,7 +5,7 @@ import com.example.weatherapp.data.AverageDayOfWeek
 import com.example.weatherapp.data.ForecastedWeatherItem
 import com.example.weatherapp.views.LoadWorkerView
 
-interface MainView : LoadWorkerView{
+interface MainView : LoadWorkerView {
 
     fun setDegreeLabel(label: String)
 

@@ -1,7 +1,6 @@
 package com.example.weatherapp.data
 
 import android.annotation.SuppressLint
-import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Handler
@@ -38,13 +37,10 @@ class LocationControllerImpl(
 
     private val currentWeatherCoord = MutableStateFlow<WeatherCoordinates?>(null)
 
-    private val locationListener = object : LocationListener {
-
-        override fun onLocationChanged(location: Location) {
-            latitude = location.latitude
-            longitude = location.longitude
-            currentWeatherCoord.value = WeatherCoordinates(location.latitude, location.longitude)
-        }
+    private val locationListener = LocationListener { location ->
+        latitude = location.latitude
+        longitude = location.longitude
+        currentWeatherCoord.value = WeatherCoordinates(location.latitude, location.longitude)
     }
 
     @SuppressLint("MissingPermission")
@@ -70,7 +66,29 @@ class LocationControllerImpl(
         locationManager.removeUpdates(locationListener)
     }
 
-    override fun getUserCoordinates(): Flow<WeatherCoordinates?> = currentWeatherCoord
+    @SuppressLint("MissingPermission")
+    override fun getUserCoordinates(): Flow<WeatherCoordinates?> = flow {
+        coroutineScope {
+            while (true) {
+                val coordinates = currentWeatherCoord
+                if (coordinates.value == null) {
+                    try {
+                        val location = locationManager.getLastKnownLocation(networkProvider)
+                        if (location == null) {
+                            emit(null)
+                        } else {
+                            emit(WeatherCoordinates(location.latitude, location.longitude))
+                        }
+                    } catch (e: Exception) {
+                        emit(null)
+                    }
+                } else {
+                    emit(coordinates.value)
+                }
+                delay(200)
+            }
+        }
+    }
 
     override fun getBaseCoordinates(): WeatherCoordinates = BASE_COORDINATES
 

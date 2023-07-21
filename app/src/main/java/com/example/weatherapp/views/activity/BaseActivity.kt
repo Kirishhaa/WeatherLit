@@ -5,10 +5,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.example.weatherapp.App
 import com.example.weatherapp.views.dialog.AbstractCancellableDialog
-import com.example.weatherapp.views.dialog.RequireLocationDialog
 import com.example.weatherapp.views.dialog.RequirePermissionDialog
 import java.util.*
 
@@ -22,7 +20,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun listenRequirePermissionDialog(onFinish: () -> Unit) {
-        supportFragmentManager.setFragmentResultListener(RequirePermissionDialog.REQUEST_KEY, this) { _, bundle ->
+        supportFragmentManager.setFragmentResultListener(
+            RequirePermissionDialog.REQUEST_KEY,
+            this
+        ) { _, bundle ->
             val isCancelled = bundle.getBoolean(AbstractCancellableDialog.ARG_IS_CANCELLED)
             if (isCancelled) {
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)

@@ -1,9 +1,7 @@
 package com.example.weatherapp.utils
 
-import androidx.fragment.app.Fragment
 import com.example.weatherapp.data.Weather
 import com.example.weatherapp.data.room.WeatherEntity
-import com.example.weatherapp.views.activity.BaseActivity
 
 fun Weather.toEntity(index: Int) = WeatherEntity(
     id = index,

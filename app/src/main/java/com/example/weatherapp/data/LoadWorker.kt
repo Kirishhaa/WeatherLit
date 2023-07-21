@@ -5,9 +5,7 @@ import android.location.Geocoder
 import android.location.LocationManager
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.util.createCancellationSignal
 import androidx.work.CoroutineWorker
-import androidx.work.Data
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.example.weatherapp.App
@@ -69,7 +67,6 @@ class LoadWorker(
             return@withContext Result.failure()
         }
 
-        val a = 5
         setProgress(workDataOf(REQUESTED_SUCCESSFULLY to true))
 
         toNextProgress()
@@ -84,7 +81,7 @@ class LoadWorker(
             repo.insertForecastedWeather(forecastedWeatherValue)
             toNextProgress()
             app.saveUsersLocationName(name)
-            if(coord!=LocationControllerImpl.BASE_COORDINATES) {
+            if (coord != LocationControllerImpl.BASE_COORDINATES) {
                 app.saveUsersCoordinates(coord)
             }
         } catch (e: Exception) {
@@ -114,30 +111,39 @@ class LoadWorker(
             locationController.isEnabled(),
             permissionsController.isAvailableAllPermissions()
         ) { coord, enabled, availablePerms ->
-            if (availablePerms) locationController.bindLocationManager()
-            if (coord != null && enabled && availablePerms) return@combine coord else return@combine null
+            return@combine Triple(coord, enabled, availablePerms)
         }
 
-        val mainJob = CoroutineScope(Dispatchers.IO).launch {
-            val checked = launch(start = CoroutineStart.LAZY) {
-                delay(5000)
-                coordinates = userCoordinates ?: LocationControllerImpl.BASE_COORDINATES
-            }
-            checked.invokeOnCompletion { if (!checked.isCancelled) cancel() }
-            enabledAndUserCoord.collect { weatherCoordinates ->
-                if (weatherCoordinates == null) {
-                    checked.start()
+        val checked = CoroutineScope(Dispatchers.IO).launch(start = CoroutineStart.LAZY) {
+            delay(5000)
+            coordinates = userCoordinates ?: LocationControllerImpl.BASE_COORDINATES
+            cancel()
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            enabledAndUserCoord.collect { triple ->
+                val (coord, enabled, availablePerms) = triple
+
+                if (availablePerms) {
+                    locationController.bindLocationManager()
+                } else {
+                    locationController.unbindLocationManager()
+                }
+
+                if (coord == null || !enabled || !availablePerms) {
+                    if (!checked.isActive) {
+                        checked.invokeOnCompletion { cancel() }
+                        checked.start()
+                    }
                 } else {
                     checked.cancel()
-                    coordinates = weatherCoordinates
+                    coordinates = coord
                     cancel()
                     return@collect
                 }
-            }
-        }
 
-        SupervisorJob(mainJob)
-        mainJob.join()
+            }
+        }.join()
 
         locationController.unbindLocationManager()
         return coordinates!!

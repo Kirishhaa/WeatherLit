@@ -17,9 +17,9 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 class MainPresenter(
-    applicationContext: Context
-): SynchronizePresenter<MainView, WeatherRepository>(applicationContext),
-    WeekDaysAdapter.Listener{
+    applicationContext: Context,
+) : SynchronizePresenter<MainView, WeatherRepository>(applicationContext),
+    WeekDaysAdapter.Listener {
 
     private val translator = Translator(applicationContext.resources)
 
@@ -37,7 +37,7 @@ class MainPresenter(
 
     override fun setModel(model: WeatherRepository) {
         super.setModel(model)
-        if(isWorkable()) updateView()
+        if (isWorkable()) updateView()
     }
 
     override fun bindView(view: MainView) {
@@ -62,7 +62,7 @@ class MainPresenter(
             val currentWeather = this.currentWeather
             if (currentWeather != null) {
                 val typeWeather = translator.translateWeatherGroup(currentWeather.group)
-                view.setDegreeLabel(currentWeather.temp.toInt().toString()+"°C")
+                view.setDegreeLabel(currentWeather.temp.toInt().toString() + "°C")
                 view.setTypeWeatherLabel(typeWeather)
                 view.showCurrentWeatherView(true)
             }

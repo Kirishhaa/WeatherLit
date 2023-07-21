@@ -6,6 +6,7 @@ import android.provider.Settings
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.work.WorkInfo
 import com.example.weatherapp.App
 import com.example.weatherapp.R
@@ -27,18 +28,20 @@ class SplashWeatherActivity : BaseActivity(), LoadWorkerView {
 
     private val presenterManager by lazy { (application as App).presenterManager }
 
-    private val activityExecutor = LifecycleExecutor()
+    private val activityExecutor = TaskExecutor<AppCompatActivity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-            presenter?.sync(false)
-        }
+        permissionsLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+                presenter?.sync(false)
+            }
 
-        val locationLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            presenter?.sync(false)
-        }
+        val locationLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                presenter?.sync(false)
+            }
 
         supportFragmentManager.setFragmentResultListener(
             RequireLocationDialog.REQUEST_KEY,
@@ -61,12 +64,12 @@ class SplashWeatherActivity : BaseActivity(), LoadWorkerView {
 
     override fun onStart() {
         super.onStart()
-        activityExecutor.registerLifecycleOwner(this)
+        activityExecutor.registerObject(this)
     }
 
     override fun onStop() {
         super.onStop()
-        activityExecutor.unregisterLifecycleOwner()
+        activityExecutor.unregisterObject()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -99,13 +102,13 @@ class SplashWeatherActivity : BaseActivity(), LoadWorkerView {
         when (result) {
             is SuccessfulResult -> {
                 Log.d("SplashWeatherActivity", "SuccessResult")
-                if(app.getIsFirstLaunch()) {
+                if (app.getIsFirstLaunch()) {
                     app.changeIsFirstLaunch()
                 }
                 navigateToMain()
             }
             is ErrorResult -> {
-                if(app.getIsFirstLaunch()) {
+                if (app.getIsFirstLaunch()) {
                     showTrouble(R.string.exit, R.string.error_fst_launch)
                 } else {
                     navigateToMain()
@@ -116,20 +119,13 @@ class SplashWeatherActivity : BaseActivity(), LoadWorkerView {
 
     override fun isNotOnline() {
         val app = application as App
-        if(app.getIsFirstLaunch()) showTrouble(R.string.exit, R.string.error_fst_launch)
+        if (app.getIsFirstLaunch()) showTrouble(R.string.exit, R.string.error_fst_launch)
     }
 
     override fun doOnIsntTime() = navigateToMain()
 
 
     override fun runLocationLauncher() = RequireLocationDialog().show(supportFragmentManager, null)
-
-
-    override fun onPermissionsDisabled() = navigateToMain()
-
-
-    override fun onLocationDisabled() = navigateToMain()
-
 
     override fun runPermissionsLauncher() = activityExecutor.execute {
         val app = (applicationContext as App)

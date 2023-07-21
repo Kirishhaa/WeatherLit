@@ -8,7 +8,6 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -30,7 +29,6 @@ import com.example.weatherapp.utils.FinalResult
 import com.example.weatherapp.utils.SuccessfulResult
 import com.example.weatherapp.utils.permissions
 import com.example.weatherapp.views.AbstractScrollViewFragment
-import com.example.weatherapp.views.activity.LifecycleExecutor
 import com.example.weatherapp.views.activity.ToolbarCallback
 import com.example.weatherapp.views.custom.ToolbarSettingsController
 import com.example.weatherapp.views.custom.ToolbarSyncController
@@ -43,7 +41,7 @@ import com.example.weatherapp.views.forecastedfragment.ForecastedListFragment.Co
 import com.example.weatherapp.views.forecastedfragment.ForecastedListFragment.Companion.ARG_SCROLLED_POSITION
 import com.example.weatherapp.views.settings.SettingsFragment
 
-class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView,
+class MainFragment : AbstractScrollViewFragment(R.layout.fragment_main), MainView,
     ToolbarTitleController, ToolbarSyncController, ToolbarSettingsController {
 
     private var toolbarCallback: ToolbarCallback? = null
@@ -55,8 +53,6 @@ class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView
 
     private lateinit var presenter: MainPresenter
     private val presenterManager by lazy { (requireActivity().application as App).presenterManager }
-
-    private val lifecycleExecutor = LifecycleExecutor()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -89,7 +85,8 @@ class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView
         presenter = if (savedInstanceState == null) {
             MainPresenter(appContext)
         } else {
-            presenterManager.restorePresenter(savedInstanceState) as? MainPresenter ?: MainPresenter(appContext)
+            presenterManager.restorePresenter(savedInstanceState) as? MainPresenter
+                ?: MainPresenter(appContext)
         }
         val app = (appContext as App)
         presenter.setModel(app.weatherRepository)
@@ -114,14 +111,12 @@ class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView
 
     override fun onStart() {
         super.onStart()
-        lifecycleExecutor.registerLifecycleOwner(viewLifecycleOwner)
         presenter.bindView(this)
         toolbarCallback?.setDefaultTownLabel()
     }
 
     override fun onStop() {
         super.onStop()
-        lifecycleExecutor.unregisterLifecycleOwner()
         presenter.unbindView()
     }
 
@@ -135,18 +130,18 @@ class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView
         toolbarCallback = null
     }
 
-    override fun setDegreeLabel(label: String) = lifecycleExecutor.execute {
+    override fun setDegreeLabel(label: String) {
         binding.mainDegreeLabel.text = label
     }
 
-    override fun setTypeWeatherLabel(label: String) = lifecycleExecutor.execute {
+    override fun setTypeWeatherLabel(label: String) {
         binding.mainTypeWeatherLabel.text = label
     }
 
     override fun goToForecastedWeather(
         forecasted: List<ForecastedWeatherItem>,
         scrolledPosition: Int,
-    ) = lifecycleExecutor.execute {
+    ) {
         val fr = ForecastedListFragment()
         fr.arguments = bundleOf(
             ARG_FORECASTED_LIST to forecasted,
@@ -155,34 +150,26 @@ class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView
         launchFragmentWithBackStack(fr, "ForecastedListFragment")
     }
 
-    override fun showCurrentWeatherView(show: Boolean) = lifecycleExecutor.execute {
+    override fun showCurrentWeatherView(show: Boolean) {
         binding.mainDegreeLabel.isVisible = show
         binding.mainTypeWeatherLabel.isVisible = show
         binding.currentWeatherProgressBar.isVisible = !show
     }
 
-    override fun showWeekDayWeatherView(show: Boolean) = lifecycleExecutor.execute {
+    override fun showWeekDayWeatherView(show: Boolean) {
         binding.weekDayRecycler.isVisible = show
         binding.weekDaysProgressBar.isVisible = !show
     }
 
-    override fun setDaysOfWeek(dayOfWeek: List<AverageDayOfWeek>) = lifecycleExecutor.execute {
+    override fun setDaysOfWeek(dayOfWeek: List<AverageDayOfWeek>) {
         adapterWeekDays.setDaysOfWeek(dayOfWeek)
     }
 
-    override fun runLocationLauncher() = lifecycleExecutor.execute {
+    override fun runLocationLauncher() {
         RequireLocationDialog().show(parentFragmentManager, null)
     }
 
-    override fun onPermissionsDisabled() = lifecycleExecutor.execute {
-        Toast.makeText(context, "permissionsDisabled", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onLocationDisabled() = lifecycleExecutor.execute {
-        Toast.makeText(context, "locationDisabled", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun runPermissionsLauncher() = lifecycleExecutor.execute {
+    override fun runPermissionsLauncher() {
         val app = (requireContext().applicationContext as App)
         val requestCount = app.getRequestedPermissionsCount()
 
@@ -194,15 +181,16 @@ class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView
         }
     }
 
-    override fun onStartLoad() = lifecycleExecutor.execute {
+    override fun onStartLoad() {
         toolbarCallback?.showProgressToolbar()
     }
 
-    override fun setProgress(progress: Int) = lifecycleExecutor.execute {
+    override fun setProgress(progress: Int) {
         toolbarCallback?.setToolbarProgress(progress)
     }
 
-    override fun onFinishLoad(result: FinalResult<WorkInfo>) = lifecycleExecutor.execute {
+    override fun onFinishLoad(result: FinalResult<WorkInfo>) {
+        Log.d("MainFragment", "onFinishLoad")
         toolbarCallback?.hideProgressToolbar()
         when (result) {
             is SuccessfulResult -> {
@@ -221,18 +209,18 @@ class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView
         }
     }
 
-    override fun isNotOnline() = lifecycleExecutor.execute {
+    override fun isNotOnline() {
         Toast.makeText(context, resources.getString(R.string.is_not_online), Toast.LENGTH_SHORT)
             .show()
     }
 
-    override fun doOnIsntTime() = lifecycleExecutor.execute {
+    override fun doOnIsntTime() {
         Toast.makeText(context, resources.getString(R.string.is_not_time), Toast.LENGTH_SHORT)
             .show()
     }
 
 
-    override fun onSettingsPressed() = lifecycleExecutor.execute {
+    override fun onSettingsPressed() {
         launchFragmentWithBackStack(SettingsFragment(), "SettingsFragment")
     }
 
@@ -251,7 +239,7 @@ class MainFragment: AbstractScrollViewFragment(R.layout.fragment_main), MainView
 
     override fun onSynchronizePressed() = presenter.sync(true)
 
-    override fun showAddInfo(show: Boolean) = lifecycleExecutor.execute {
+    override fun showAddInfo(show: Boolean) {
         binding.addInfoRecycler.isVisible = show
         binding.addInfoProgressBar.isVisible = !show
     }

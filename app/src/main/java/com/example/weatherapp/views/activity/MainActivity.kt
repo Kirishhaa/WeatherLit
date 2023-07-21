@@ -1,7 +1,6 @@
 package com.example.weatherapp.views.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -20,25 +19,23 @@ class MainActivity : BaseActivity(), ToolbarCallback {
 
     private var scrollPositionsMap = mutableMapOf<String, Int>()
 
-    private val lifecycleExecutor = LifecycleExecutor()
-
-    override fun setDefaultTownLabel() = lifecycleExecutor.execute {
+    override fun setDefaultTownLabel() {
         binding.customToolbar.setDefaultTownLabel()
     }
 
-    override fun setTownLabel(label: String, isUpdate: Boolean, isShow: Boolean) = lifecycleExecutor.execute {
+    override fun setTownLabel(label: String, isUpdate: Boolean, isShow: Boolean) {
         binding.customToolbar.setTownLabel(label, isUpdate, isShow)
     }
 
-    override fun hideProgressToolbar() = lifecycleExecutor.execute {
+    override fun hideProgressToolbar() {
         binding.customToolbar.hideProgressBar()
     }
 
-    override fun showProgressToolbar() = lifecycleExecutor.execute {
+    override fun showProgressToolbar() {
         binding.customToolbar.showProgressBar()
     }
 
-    override fun setToolbarProgress(progress: Int) = lifecycleExecutor.execute {
+    override fun setToolbarProgress(progress: Int) {
         binding.customToolbar.setProgress(progress)
     }
 
@@ -66,16 +63,6 @@ class MainActivity : BaseActivity(), ToolbarCallback {
                 .commit()
         }
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        lifecycleExecutor.registerLifecycleOwner(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        lifecycleExecutor.unregisterLifecycleOwner()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

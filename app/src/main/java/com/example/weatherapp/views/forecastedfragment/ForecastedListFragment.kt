@@ -3,7 +3,6 @@ package com.example.weatherapp.views.forecastedfragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.App
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastedWeatherItem
@@ -42,10 +41,9 @@ class ForecastedListFragment : AbstractScrollViewFragment(R.layout.fragment_fore
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentForecastedListBinding.bind(view)
-        binding.recyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.adapter = adapter
-
+        binding.recyclerView.setFlat(true)
+        binding.recyclerView.set3DItem(true)
         presenter = if (savedInstanceState == null) {
             ForecastedListPresenter()
         } else {

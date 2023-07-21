@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import com.example.weatherapp.domain.PermissionsController
-import kotlinx.coroutines.*
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 
 class PermissionsControllerImpl(
@@ -31,7 +31,7 @@ class PermissionsControllerImpl(
             var isEnable = isLocationAvailable() && isNetworkAvailable()
             emit(isEnable)
             while (true) {
-                delay(100)
+                delay(200)
                 val enable = isLocationAvailable() && isNetworkAvailable()
                 if (isEnable != enable) {
                     isEnable = enable

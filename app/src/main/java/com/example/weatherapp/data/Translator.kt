@@ -6,7 +6,7 @@ import com.example.weatherapp.R
 class Translator(private val resources: Resources) {
 
     fun translateAdditionalInfoSubValue(value: String?): String {
-        return when(value) {
+        return when (value) {
             null -> ""
             "hPa" -> resources.getString(R.string.measure_hPa)
             "m/s" -> resources.getString(R.string.measure_ms)

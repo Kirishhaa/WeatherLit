@@ -20,6 +20,7 @@ import com.example.weatherapp.data.TimestampParser
 import com.example.weatherapp.presenters.base.BasePresenter
 import com.example.weatherapp.utils.*
 import com.example.weatherapp.views.LoadWorkerView
+import com.example.weatherapp.views.activity.TaskExecutor
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -41,6 +42,18 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
     private val isSynchronizing = AtomicBoolean(false)
 
     private var synchronizeJob: Job? = null
+
+    private val taskExecutor = TaskExecutor<V>()
+
+    override fun bindView(view: V) {
+        super.bindView(view)
+        taskExecutor.registerObject(view)
+    }
+
+    override fun unbindView() {
+        super.unbindView()
+        taskExecutor.unregisterObject()
+    }
 
     fun sync(userUpdate: Boolean) {
         if (!isSynchronizing.getAndSet(true)) {
@@ -79,15 +92,10 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                     if (userUpdate) {
                                         getView()?.runPermissionsLauncher()
                                         tryToCancelWork(workManager)
-
-                                        cancel()
-                                        return@collect
                                     } else if (isFirstLaunch) {
                                         if (requestedPerms) {
-                                            Log.d("SynchronizePresenter", "runWorker")
                                             runWorker(app, workManager, handler, currentTimestamp)
                                         } else {
-                                            Log.d("SynchronizePresenter", "runPermLauncher")
                                             requestedPerms = true
                                             getView()?.runPermissionsLauncher()
                                             tryToCancelWork(workManager)
@@ -95,10 +103,8 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                             return@collect
                                         }
                                     } else {
-                                        Log.d("SynchronizePresenter", "else branch permissions")
                                         waitingAfterPressed()
-                                        cancel()
-                                        return@collect
+                                        tryToCancelWork(workManager)
                                     }
                                 }
                             } else {
@@ -106,8 +112,6 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                     getView()?.runLocationLauncher()
                                     tryToCancelWork(workManager)
                                     waitingAfterPressed()
-                                    cancel()
-                                    return@collect
                                 } else if (isFirstLaunch) {
                                     if (requestedLocation) {
                                         runWorker(app, workManager, handler, currentTimestamp)
@@ -121,23 +125,19 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                 } else {
                                     Log.d("SynchronizePresenter", "else branch location")
                                     waitingAfterPressed()
-                                    cancel()
-                                    return@collect
+                                    tryToCancelWork(workManager)
                                 }
                             }
                         } else {
                             handler.post { getView()?.isNotOnline() }
                             tryToCancelWork(workManager)
                             waitingAfterPressed()
-                            cancel()
-                            return@collect
                         }
                     }
                 } else {
                     handler.post { getView()?.doOnIsntTime() }
                     tryToCancelWork(workManager)
                     waitingAfterPressed()
-                    cancel()
                 }
             }
             synchronizeJob?.invokeOnCompletion {
@@ -154,9 +154,7 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
         }
     }
 
-    private suspend fun waitingAfterPressed() {
-        delay(3000)
-    }
+    private suspend fun waitingAfterPressed() = delay(3000)
 
     private fun runWorker(
         app: App,
@@ -168,7 +166,9 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
         val oneTimeWorker = OneTimeWorkRequestBuilder<LoadWorker>().build()
         workManager.enqueue(oneTimeWorker)
         handler.post {
-            getView()?.onStartLoad()
+            taskExecutor.execute {
+                it.onStartLoad()
+            }
         }
         var result: FinalResult<WorkInfo>? = null
         CoroutineScope(Dispatchers.IO).launch {
@@ -178,49 +178,56 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                     WorkInfo.State.RUNNING -> {
                         isRequestSuccessful =
                             it.progress.getBoolean(LoadWorker.REQUESTED_SUCCESSFULLY, false)
+                        handler.post { getView()?.setProgress(progress) }
                     }
                     WorkInfo.State.SUCCEEDED -> {
                         Log.d("WorkerPresenter", "WorkInfoState Succeeded")
                         result = SuccessfulResult(it)
                         app.setUpdateTimestamp(timestamp)
-                        isRequestSuccessful = false
                         cancel()
                         return@collect
                     }
                     WorkInfo.State.FAILED -> {
                         Log.d("WorkerPresenter", "WorkInfoState Failed")
                         result = ErrorResult(FailedWork())
-                        isRequestSuccessful = false
                         cancel()
                         return@collect
                     }
                     WorkInfo.State.CANCELLED -> {
                         Log.d("WorkerPresenter", "WorkInfoState Cancelled")
                         result = ErrorResult(CancelledWork())
-                        isRequestSuccessful = false
                         cancel()
                         return@collect
                     }
                     WorkInfo.State.BLOCKED -> {
                         Log.d("WorkerPresenter", "WorkInfoState Blocked")
                         result = ErrorResult(CancelledWork())
-                        isRequestSuccessful = false
                         cancel()
                         return@collect
                     }
-                    else -> handler.post { getView()?.setProgress(progress) }
+                    else -> {
+                        //TODO MUST TO DO SMTH
+                    }
                 }
             }
         }.invokeOnCompletion {
+            synchronizeJob?.cancel()
             resetWorkerData(handler, result!!)
+            isRequestSuccessful = false
         }
     }
 
     private fun resetWorkerData(handler: Handler, result: FinalResult<WorkInfo>) {
-        handler.post { getView()?.setProgress(100) }
-        handler.post { getView()?.onFinishLoad(result) }
+        handler.post {
+            taskExecutor.execute {
+                it.setProgress(100)
+                it.onFinishLoad(result)
+            }
+        }
         isSynchronizing.set(false)
         synchronizeJob?.cancel()
+        requestedPerms = false
+        requestedLocation = false
     }
 
 

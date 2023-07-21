@@ -18,8 +18,4 @@ interface LoadWorkerView {
 
     fun runLocationLauncher()
 
-    fun onPermissionsDisabled()
-
-    fun onLocationDisabled()
-
 }

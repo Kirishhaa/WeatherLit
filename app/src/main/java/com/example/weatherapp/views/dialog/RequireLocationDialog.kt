@@ -3,7 +3,6 @@ package com.example.weatherapp.views.dialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import com.example.weatherapp.R
 
 class RequireLocationDialog : AbstractCancellableDialog(REQUEST_KEY) {
