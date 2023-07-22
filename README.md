@@ -1,5 +1,10 @@
 # WeatherLit
 WeatherLit is a simple weather app, provides you to check current and forecasted for 5 days weather in your town.
+
+![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/main_1.jpg)
+
+![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/list_gif.gif)
+
 ## Introduction
 This project was created to learn OkHTTP3, Room DB and MVP architecture.
 ## Technology
@@ -17,6 +22,8 @@ You can launch the project by [link](https://drive.google.com/file/d/1OcnSOmnZ9L
   a) at the start of the program
 
   b) by syncronize click
+
+  ![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/sync_gif.gif)
 
 + If you don't bind your town with the app, you will get info of "Unknown location"
 
