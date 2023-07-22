@@ -4,6 +4,7 @@
     <string name="forecast_for_5_days">Прогноз на 5 днів</string>
     <string name="see_more">Більше</string>
     <string name="error_fst_launch">Для коректного першого запуску додатка необхідно бути підключенним до мережи.</string>
+    <string name="sync_error">Помилка синхронізації</string>
     <string name="close">закрити</string>
     <string name="exit">вийти</string>
     <string name="temperature">Температура</string>

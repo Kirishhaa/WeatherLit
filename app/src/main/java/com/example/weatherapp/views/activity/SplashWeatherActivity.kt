@@ -109,7 +109,7 @@ class SplashWeatherActivity : BaseActivity(), LoadWorkerView {
             }
             is ErrorResult -> {
                 if (app.getIsFirstLaunch()) {
-                    showTrouble(R.string.exit, R.string.error_fst_launch)
+                    showTrouble(R.string.exit, R.string.synchronize_error)
                 } else {
                     navigateToMain()
                 }
@@ -124,8 +124,6 @@ class SplashWeatherActivity : BaseActivity(), LoadWorkerView {
     }
 
     override fun doOnIsntTime() = navigateToMain()
-
-
 
     override fun runLocationLauncher() = RequireLocationDialog().show(supportFragmentManager, null)
 

@@ -92,9 +92,13 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                     if (userUpdate) {
                                         getView()?.runPermissionsLauncher()
                                         tryToCancelWork(workManager)
+                                        cancel()
+                                        return@collect
                                     } else if (isFirstLaunch) {
                                         if (requestedPerms) {
                                             runWorker(app, workManager, handler, currentTimestamp)
+                                            cancel()
+                                            return@collect
                                         } else {
                                             requestedPerms = true
                                             getView()?.runPermissionsLauncher()
@@ -110,6 +114,8 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                 if (isFirstLaunch) {
                                     if (requestedLocation) {
                                         runWorker(app, workManager, handler, currentTimestamp)
+                                        cancel()
+                                        return@collect
                                     } else {
                                         requestedLocation = true
                                         getView()?.runLocationLauncher()
@@ -117,10 +123,12 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                         cancel()
                                         return@collect
                                     }
-                                } else if(userUpdate) {
+                                } else if (userUpdate) {
                                     getView()?.runLocationLauncher()
                                     tryToCancelWork(workManager)
                                     waitingAfterPressed()
+                                    cancel()
+                                    return@collect
                                 } else {
                                     runWorker(app, workManager, handler, currentTimestamp)
                                 }
@@ -129,12 +137,16 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                             handler.post { getView()?.isNotOnline() }
                             tryToCancelWork(workManager)
                             waitingAfterPressed()
+                            cancel()
+                            return@collect
                         }
                     }
                 } else {
                     handler.post { getView()?.doOnIsntTime() }
                     tryToCancelWork(workManager)
                     waitingAfterPressed()
+                    cancel()
+                    return@launch
                 }
             }
             synchronizeJob?.invokeOnCompletion {
