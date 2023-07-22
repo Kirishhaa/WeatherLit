@@ -120,9 +120,11 @@ class SplashWeatherActivity : BaseActivity(), LoadWorkerView {
     override fun isNotOnline() {
         val app = application as App
         if (app.getIsFirstLaunch()) showTrouble(R.string.exit, R.string.error_fst_launch)
+        else navigateToMain()
     }
 
     override fun doOnIsntTime() = navigateToMain()
+
 
 
     override fun runLocationLauncher() = RequireLocationDialog().show(supportFragmentManager, null)

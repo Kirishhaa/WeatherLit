@@ -103,16 +103,11 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                             return@collect
                                         }
                                     } else {
-                                        waitingAfterPressed()
-                                        tryToCancelWork(workManager)
+                                        runWorker(app, workManager, handler, currentTimestamp)
                                     }
                                 }
                             } else {
-                                if (userUpdate) {
-                                    getView()?.runLocationLauncher()
-                                    tryToCancelWork(workManager)
-                                    waitingAfterPressed()
-                                } else if (isFirstLaunch) {
+                                if (isFirstLaunch) {
                                     if (requestedLocation) {
                                         runWorker(app, workManager, handler, currentTimestamp)
                                     } else {
@@ -122,10 +117,12 @@ abstract class SynchronizePresenter<V : LoadWorkerView, M>
                                         cancel()
                                         return@collect
                                     }
-                                } else {
-                                    Log.d("SynchronizePresenter", "else branch location")
-                                    waitingAfterPressed()
+                                } else if(userUpdate) {
+                                    getView()?.runLocationLauncher()
                                     tryToCancelWork(workManager)
+                                    waitingAfterPressed()
+                                } else {
+                                    runWorker(app, workManager, handler, currentTimestamp)
                                 }
                             }
                         } else {
