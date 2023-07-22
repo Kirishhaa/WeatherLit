@@ -2,6 +2,8 @@
 WeatherLit is a simple weather app, provides you to check current and forecasted for 5 days weather in your town.
 
 ![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/main_1.jpg)
+![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/main_2.jpg)
+![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/settings.jpg)
 
 ![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/list_gif.gif)
 
