@@ -3,7 +3,7 @@ WeatherLit is a simple weather app, provides you to check current and forecasted
 
 ![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/main_1.jpg)
 ![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/main_2.jpg)
-![list_gif](https://github.com/Kirishhaa/WeatherLit/assets/124390381/9ad4f92e-a6ef-4939-a055-173f2a39010f)
+![](https://github.com/Kirishhaa/WeatherLit/blob/master/ForREADME/list_gif.gif)
 
 ## Introduction
 This project was created to learn OkHTTP3, Room DB and MVP architecture.
